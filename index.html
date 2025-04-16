@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ridho Tamma - Software Engineer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* Basic styles not handled by Tailwind utilities or needing pseudo-elements */
+        a {
+            text-decoration: none;
+            color: inherit;
+            /* Ensures links inherit text color unless overridden */
+        }
+
+        body {
+            font-family: "Plus Jakarta Sans", sans-serif;
+            /* Base font */
+            scroll-behavior: smooth;
+            /* Smooth scrolling for anchor links */
+            /* Base transition for color scheme changes */
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .nav-link {
+            position: relative;
+            /* Needed for the ::after pseudo-element */
+            text-decoration: none;
+            transition: color 0.3s ease;
+            /* Smooth color transition on hover */
+        }
+
+        /* Underline effect for nav links */
+        .nav-link::after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            transform: scaleX(0);
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background-color: #000000;
+            /* Default underline color (black) */
+            transform-origin: bottom right;
+            transition: transform 0.3s ease-out;
+        }
+
+        .dark .nav-link::after {
+            background-color: #f3f4f6;
+            /* Underline color in dark mode (gray-100) */
+        }
+
+        .nav-link:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+
+        /* Base styles for the minimal button */
+        .btn-minimal {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            border-radius: 9999px;
+            /* pill shape */
+            transition: background-color 0.3s ease, color 0.3s ease;
+            font-weight: normal;
+            font-size: 0.875rem;
+            /* text-sm */
+        }
+
+        /* Base styles for project cards */
+        .project-card {
+            border-radius: 0.5rem;
+            /* rounded-lg */
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.5s ease, background-color 0.3s ease;
+            opacity: 0;
+            /* Initial state for GSAP animation */
+            transform: translateY(20px);
+            /* Initial state for GSAP animation */
+        }
+
+        .project-card:hover {
+            /* Lift effect on hover */
+            transform: translateY(-5px);
+            /* Default shadow on hover */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+                0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        /* Dark mode shadow for project card hover - using Tailwind's arbitrary value syntax */
+        .dark .project-card:hover {
+            box-shadow: 0 4px 6px -1px rgba(255, 255, 255, 0.1), 0 2px 4px -1px rgba(255, 255, 255, 0.06);
+        }
+
+
+        /* Base styles for section headings */
+        .section-heading {
+            font-size: 1.875rem;
+            /* text-3xl */
+            font-weight: 700;
+            /* font-bold */
+            margin-bottom: 2rem;
+            /* mb-8 */
+            text-align: center;
+            opacity: 0;
+            /* Initial state for GSAP animation */
+            transform: translateY(20px);
+            /* Initial state for GSAP animation */
+        }
+
+        /* Base styles for social icons */
+        .social-icon {
+            transition: color 0.3s ease;
+            display: inline-block;
+        }
+
+        .social-icon i {
+            font-size: 1.5rem;
+            /* text-2xl */
+            vertical-align: middle;
+        }
+
+        /* Base styles for mobile nav links */
+        .mobile-nav-link {
+            opacity: 0;
+            /* Initial state for GSAP animation */
+            transform: translateY(15px);
+            /* Initial state for GSAP animation */
+            display: block;
+            padding-top: 0.75rem;
+            /* py-3 */
+            padding-bottom: 0.75rem;
+            /* py-3 */
+            font-size: 1.125rem;
+            /* text-lg */
+        }
+    </style>
+    <script>
+        // Immediately set theme based on localStorage or OS preference BEFORE rendering
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark')
+        } else {
+            document.documentElement.classList.remove('dark')
+        }
+    </script>
+</head>
+
+<body class="antialiased bg-white text-black dark:bg-gray-900 dark:text-gray-100">
+    <header id="main-header"
+        class="fixed top-0 left-0 right-0 z-[100] bg-white bg-opacity-90 backdrop-blur-sm shadow-sm dark:bg-gray-800 dark:bg-opacity-90 dark:shadow-gray-700 transition-colors duration-300">
+        <div class="container mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+            <div class="text-xl font-bold text-black dark:text-white">
+                <a href="#hero"
+                    class="hover:text-gray-700 dark:hover:text-gray-300 transition duration-300 logo-link">Ridho Tamma</a>
+            </div>
+
+            <div class="flex items-center space-x-4">
+                <nav class="hidden md:block">
+                    <ul class="flex space-x-6">
+                        <li><a href="#projects"
+                                class="nav-link text-black dark:text-gray-100 hover:text-gray-600 dark:hover:text-gray-400">Projects</a>
+                        </li>
+                        <li><a href="#about"
+                                class="nav-link text-black dark:text-gray-100 hover:text-gray-600 dark:hover:text-gray-400">About</a>
+                        </li>
+                        <li><a href="#contact"
+                                class="nav-link text-black dark:text-gray-100 hover:text-gray-600 dark:hover:text-gray-400">Contact</a>
+                        </li>
+                    </ul>
+                </nav>
+
+                <button id="theme-toggle-button" type="button"
+                    class="text-black dark:text-gray-100 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none text-xl transition-colors duration-300"
+                    aria-label="Toggle dark mode">
+                    <i id="theme-toggle-icon" class="fas fa-moon"></i>
+                </button>
+
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" type="button"
+                        class="text-black dark:text-gray-100 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none focus:text-gray-700 dark:focus:text-gray-300 z-[60] relative text-xl"
+                        aria-label="Toggle menu">
+                        <i id="menu-toggle-icon" class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div id="mobile-menu"
+        class="fixed top-0 left-0 w-screen h-screen bg-white dark:bg-gray-800 z-[55] flex flex-col items-center justify-center md:hidden transition-colors duration-300">
+        <nav class="container mx-auto px-4 sm:px-6 text-center">
+            <ul class="flex flex-col items-center space-y-5">
+                <li><a href="#projects"
+                        class="mobile-nav-link text-black dark:text-gray-100 hover:text-gray-600 dark:hover:text-gray-400">Projects</a>
+                </li>
+                <li><a href="#about"
+                        class="mobile-nav-link text-black dark:text-gray-100 hover:text-gray-600 dark:hover:text-gray-400">About</a>
+                </li>
+                <li><a href="#contact"
+                        class="mobile-nav-link text-black dark:text-gray-100 hover:text-gray-600 dark:hover:text-gray-400">Contact</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <main>
+        <section id="hero"
+            class="min-h-screen flex items-center justify-center text-center px-4 sm:px-6 bg-white dark:bg-gray-900 transition-colors duration-300 pt-20">
+            <div class="max-w-3xl mx-auto">
+                <h1 class="text-4xl sm:text-5xl md:text-7xl font-bold mb-4 hero-element text-black dark:text-white">
+                    Ridho Tamma
+                </h1>
+                <p class="text-lg sm:text-xl md:text-2xl mb-6 hero-element text-black dark:text-gray-100">
+                    Software Engineer | Full-Stack Developer
+                </p>
+                <p
+                    class="text-base sm:text-lg md:text-xl mb-8 max-w-xl mx-auto hero-element text-gray-700 dark:text-gray-300">
+                    Passionate about building clean, efficient, and user-friendly web
+                    applications.
+                </p>
+                <div class="space-y-4 sm:space-y-0 sm:space-x-4 hero-element">
+                    <a href="#projects"
+                        class="btn-minimal border border-black text-black dark:border-gray-300 dark:text-gray-300 hover:bg-black hover:text-white dark:hover:bg-gray-300 dark:hover:text-gray-900 w-full sm:w-auto block sm:inline-block">View
+                        Projects</a>
+                    <a href="#contact"
+                        class="btn-minimal border border-black text-black dark:border-gray-300 dark:text-gray-300 hover:bg-black hover:text-white dark:hover:bg-gray-300 dark:hover:text-gray-900 w-full sm:w-auto block sm:inline-block">Get
+                        In Touch</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects"
+            class="py-16 sm:py-20 px-4 sm:px-6 bg-gray-50 dark:bg-gray-800 transition-colors duration-300">
+            <div class="container mx-auto">
+                <h2 class="section-heading text-black dark:text-white">Projects</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="project-card p-6 border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+                        <img src="https://placehold.co/600x400/e2e8f0/a0aec0?text=Project+1" alt="Project 1 Screenshot"
+                            class="w-full h-48 object-cover mb-4 rounded"
+                            onerror="this.onerror=null; this.src='https://placehold.co/600x400/e2e8f0/a0aec0?text=Placeholder';" />
+                        <h3 class="text-xl font-bold mb-2 text-black dark:text-white">
+                            Project Title One
+                        </h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-300 mb-3">
+                            A brief 1-3 sentence description explaining the project, its
+                            purpose, and your specific role in its development.
+                        </p>
+                        <div class="mb-4">
+                            <span
+                                class="inline-block bg-gray-200 dark:bg-gray-700 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 dark:text-gray-200 mr-2 mb-2">React</span>
+                            <span
+                                class="inline-block bg-gray-200 dark:bg-gray-700 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 dark:text-gray-200 mr-2 mb-2">Node.js</span>
+                            <span
+                                class="inline-block bg-gray-200 dark:bg-gray-700 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 dark:text-gray-200 mr-2 mb-2">MongoDB</span>
+                        </div>
+                        <div class="flex space-x-4">
+                            <a href="#" target="_blank" rel="noopener noreferrer"
+                                class="text-sm font-medium text-black dark:text-gray-200 hover:underline">Live Demo</a>
+                            <a href="#" target="_blank" rel="noopener noreferrer"
+                                class="text-sm font-medium text-black dark:text-gray-200 hover:underline">GitHub</a>
+                        </div>
+                    </div>
+
+                    <div class="project-card p-6 border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+                        <img src="https://placehold.co/600x400/e2e8f0/a0aec0?text=Project+2" alt="Project 2 Screenshot"
+                            class="w-full h-48 object-cover mb-4 rounded"
+                            onerror="this.onerror=null; this.src='https://placehold.co/600x400/e2e8f0/a0aec0?text=Placeholder';" />
+                        <h3 class="text-xl font-bold mb-2 text-black dark:text-white">
+                            Project Title Two
+                        </h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-300 mb-3">
+                            Another concise description highlighting the key features and
+                            technologies used in this particular project.
+                        </p>
+                        <div class="mb-4">
+                            <span
+                                class="inline-block bg-gray-200 dark:bg-gray-700 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 dark:text-gray-200 mr-2 mb-2">Python</span>
+                            <span
+                                class="inline-block bg-gray-200 dark:bg-gray-700 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 dark:text-gray-200 mr-2 mb-2">Flask</span>
+                            <span
+                                class="inline-block bg-gray-200 dark:bg-gray-700 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 dark:text-gray-200 mr-2 mb-2">PostgreSQL</span>
+                        </div>
+                        <div class="flex space-x-4">
+                            <a href="#" target="_blank" rel="noopener noreferrer"
+                                class="text-sm font-medium text-black dark:text-gray-200 hover:underline">Live Demo</a>
+                            <a href="#" target="_blank" rel="noopener noreferrer"
+                                class="text-sm font-medium text-black dark:text-gray-200 hover:underline">GitHub</a>
+                        </div>
+                    </div>
+
+                    <div class="project-card p-6 border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+                        <img src="https://placehold.co/600x400/e2e8f0/a0aec0?text=Project+3" alt="Project 3 Screenshot"
+                            class="w-full h-48 object-cover mb-4 rounded"
+                            onerror="this.onerror=null; this.src='https://placehold.co/600x400/e2e8f0/a0aec0?text=Placeholder';" />
+                        <h3 class="text-xl font-bold mb-2 text-black dark:text-white">
+                            Project Title Three
+                        </h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-300 mb-3">
+                            Final project description for the grid. Keep it focused on the
+                            outcome and your contribution.
+                        </p>
+                        <div class="mb-4">
+                            <span
+                                class="inline-block bg-gray-200 dark:bg-gray-700 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 dark:text-gray-200 mr-2 mb-2">Vue.js</span>
+                            <span
+                                class="inline-block bg-gray-200 dark:bg-gray-700 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 dark:text-gray-200 mr-2 mb-2">Firebase</span>
+                            <span
+                                class="inline-block bg-gray-200 dark:bg-gray-700 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 dark:text-gray-200 mr-2 mb-2">Tailwind
+                                CSS</span>
+                        </div>
+                        <div class="flex space-x-4">
+                            <a href="#" target="_blank" rel="noopener noreferrer"
+                                class="text-sm font-medium text-black dark:text-gray-200 hover:underline">Live Demo</a>
+                            <a href="#" target="_blank" rel="noopener noreferrer"
+                                class="text-sm font-medium text-black dark:text-gray-200 hover:underline">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about"
+            class="py-16 sm:py-20 px-4 sm:px-6 bg-white dark:bg-gray-900 transition-colors duration-300">
+            <div class="container mx-auto max-w-4xl">
+                <h2 class="section-heading text-black dark:text-white">About Me</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12 items-start about-element">
+                    <div class="text-left">
+                        <p class="mb-4 text-gray-700 dark:text-gray-300 leading-relaxed">
+                            Hi, I'm [Ridho Tamma], a software engineer based in [Your
+                            Location, e.g., San Francisco]. I specialize in [mention your
+                            specialty, e.g., front-end development with React, building
+                            scalable backend systems, etc.]. I enjoy turning complex
+                            problems into simple, beautiful, and intuitive designs.
+                        </p>
+                        <p class="text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
+                            When I'm not coding, you can find me [mention a hobby or two,
+                            e.g., exploring new technologies, hiking, reading sci-fi
+                            novels]. I'm always eager to learn and collaborate on exciting
+                            projects.
+                        </p>
+                        <div class="mt-6 text-center md:text-left">
+                            <a href="/path/to/your/resume.pdf" download="YourName_Resume.pdf"
+                                class="btn-minimal border border-black text-black dark:border-gray-300 dark:text-gray-300 hover:bg-black hover:text-white dark:hover:bg-gray-300 dark:hover:text-gray-900">Download
+                                Resume (PDF)</a>
+                        </div>
+                    </div>
+                    <div class="text-left mt-8 md:mt-0">
+                        <div class="space-y-4">
+                            <div>
+                                <h4 class="font-semibold mb-1 text-gray-800 dark:text-gray-100">Languages:</h4>
+                                <p class="text-sm sm:text-base text-gray-600 dark:text-gray-400">
+                                    JavaScript (ES6+), Python, HTML5, CSS3, SQL
+                                </p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold mb-1 text-gray-800 dark:text-gray-100">
+                                    Frameworks/Libraries:
+                                </h4>
+                                <p class="text-sm sm:text-base text-gray-600 dark:text-gray-400">
+                                    React, Node.js, Express, Vue.js, Tailwind CSS, Flask/Django
+                                </p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold mb-1 text-gray-800 dark:text-gray-100">Databases:</h4>
+                                <p class="text-sm sm:text-base text-gray-600 dark:text-gray-400">MongoDB, PostgreSQL,
+                                    MySQL</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold mb-1 text-gray-800 dark:text-gray-100">
+                                    Tools & Platforms:
+                                </h4>
+                                <p class="text-sm sm:text-base text-gray-600 dark:text-gray-400">
+                                    Git, Docker, AWS, Firebase, Vercel
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact"
+            class="py-16 sm:py-20 px-4 sm:px-6 bg-gray-50 dark:bg-gray-800 transition-colors duration-300">
+            <div class="container mx-auto max-w-3xl text-center">
+                <h2 class="section-heading text-black dark:text-white">Get In Touch</h2>
+                <p class="mb-8 text-base sm:text-lg text-gray-700 dark:text-gray-300 contact-element">
+                    Interested in collaborating or have a question? Feel free to reach
+                    out.
+                </p>
+                <div class="mb-8 contact-element">
+                    <a href="mailto:your.email@example.com"
+                        class="text-lg sm:text-xl font-medium text-black dark:text-gray-200 hover:underline break-all">
+                        your.email@example.com
+                    </a>
+                </div>
+                <div class="flex justify-center space-x-6 contact-element">
+                    <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer"
+                        class="social-icon text-black dark:text-gray-200 hover:text-gray-600 dark:hover:text-gray-400"
+                        title="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener noreferrer"
+                        class="social-icon text-black dark:text-gray-200 hover:text-gray-600 dark:hover:text-gray-400"
+                        title="LinkedIn">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer
+        class="bg-white dark:bg-gray-900 py-6 border-t border-gray-200 dark:border-gray-700 transition-colors duration-300">
+        <div class="container mx-auto px-4 sm:px-6 text-center text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+            © <span id="current-year"></span> Ridho Tamma. All Rights Reserved.
+        </div>
+    </footer>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.defaults({ ease: "power2.out", duration: 0.6 });
+
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuToggleIcon = document.getElementById('menu-toggle-icon');
+        const mainHeader = document.getElementById('main-header');
+        const body = document.body;
+        const mobileNavLinks = gsap.utils.toArray('.mobile-nav-link');
+        const logoLink = document.querySelector('.logo-link');
+
+        gsap.set(mobileMenu, { yPercent: -100, autoAlpha: 0 });
+        gsap.set(mobileNavLinks, { y: 15, autoAlpha: 0 });
+
+        const menuTimeline = gsap.timeline({ paused: true, reversed: true });
+
+        menuTimeline
+            .to(mobileMenu, {
+                yPercent: 0,
+                autoAlpha: 1,
+                duration: 0.5,
+                ease: 'power3.out'
+            })
+            .to(mobileNavLinks, {
+                y: 0,
+                autoAlpha: 1,
+                stagger: 0.08,
+                duration: 0.4,
+                ease: 'power2.out'
+            }, "-=0.3");
+
+        function openMenu() {
+            menuTimeline.play();
+            menuToggleIcon.classList.remove('fa-bars');
+            menuToggleIcon.classList.add('fa-xmark');
+            mobileMenuButton.setAttribute('aria-expanded', 'true');
+            // Prevent body scroll when mobile menu is open
+            body.style.overflow = 'hidden';
+        }
+
+        function closeMenu() {
+            menuTimeline.reverse();
+            menuToggleIcon.classList.remove('fa-xmark');
+            menuToggleIcon.classList.add('fa-bars');
+            mobileMenuButton.setAttribute('aria-expanded', 'false');
+            // Restore body scroll
+            body.style.overflow = '';
+        }
+
+        if (mobileMenuButton) {
+            mobileMenuButton.addEventListener('click', () => {
+                if (menuTimeline.reversed()) {
+                    openMenu();
+                } else {
+                    closeMenu();
+                }
+            });
+        }
+
+        // Close mobile menu when a link is clicked
+        if (mobileNavLinks.length > 0) {
+            mobileNavLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    if (!menuTimeline.reversed()) {
+                        closeMenu();
+                    }
+                });
+            });
+        }
+        // Close mobile menu when logo is clicked
+        if (logoLink) {
+            logoLink.addEventListener('click', () => {
+                if (!menuTimeline.reversed()) {
+                    closeMenu();
+                }
+            });
+        }
+
+        // GSAP Animations
+        gsap.from(".hero-element", { opacity: 0, y: 30, stagger: 0.2, delay: 0.3 });
+
+        gsap.utils.toArray(".section-heading").forEach((heading) => {
+            gsap.to(heading, {
+                scrollTrigger: { trigger: heading, start: "top 85%", toggleActions: "play none none none" },
+                opacity: 1, y: 0, duration: 0.5,
+            });
+        });
+
+        gsap.utils.toArray(".project-card").forEach((card) => {
+            gsap.to(card, {
+                scrollTrigger: { trigger: card, start: "top 85%", toggleActions: "play none none none" },
+                opacity: 1, y: 0, duration: 0.5, stagger: 0.1,
+            });
+        });
+
+        gsap.utils.toArray(".about-element").forEach((el) => { // Target individual elements for staggered effect
+            gsap.from(el.children, { // Animate children of the grid container
+                scrollTrigger: { trigger: el, start: "top 70%", toggleActions: "play none none none" },
+                opacity: 0, y: 20, stagger: 0.15, duration: 0.6,
+            });
+        });
+
+
+        gsap.utils.toArray(".contact-element").forEach((el) => {
+            gsap.from(el, {
+                scrollTrigger: { trigger: "#contact", start: "top 75%", toggleActions: "play none none none" },
+                opacity: 0, y: 20, stagger: 0.2, duration: 0.6, // Stagger applied here affects sibling contact-elements
+            });
+        });
+
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+            anchor.addEventListener("click", function (e) {
+                const targetId = this.getAttribute("href");
+                // Check if it's a valid anchor link and not just "#"
+                if (targetId && targetId.startsWith("#") && targetId.length > 1) {
+                    e.preventDefault();
+                    const targetElement = document.querySelector(targetId);
+
+                    if (targetElement) {
+                        // If mobile menu is open, close it before scrolling
+                        if (!menuTimeline.reversed()) {
+                            closeMenu();
+                            // Wait a tiny bit for menu animation before scrolling
+                            setTimeout(() => {
+                                scrollToElement(targetElement);
+                            }, menuTimeline.duration() * 1000); // Wait for reverse duration
+                        } else {
+                            scrollToElement(targetElement);
+                        }
+                    }
+                }
+            });
+        });
+
+        function scrollToElement(element) {
+            const headerOffset = mainHeader?.offsetHeight || 60; // Height of the fixed header
+            const elementPosition = element.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: "smooth",
+            });
+        }
+
+
+        // Set current year in footer
+        document.getElementById("current-year").textContent = new Date().getFullYear();
+
+        // Dark/Light Mode Toggle Logic
+        const themeToggleButton = document.getElementById('theme-toggle-button');
+        const themeToggleIcon = document.getElementById('theme-toggle-icon');
+        const htmlElement = document.documentElement;
+
+        const sunIcon = 'fa-sun';
+        const moonIcon = 'fa-moon';
+
+        function setTheme(isDark) {
+            if (isDark) {
+                htmlElement.classList.add('dark');
+                themeToggleIcon.classList.remove(moonIcon);
+                themeToggleIcon.classList.add(sunIcon);
+                localStorage.setItem('theme', 'dark');
+            } else {
+                htmlElement.classList.remove('dark');
+                themeToggleIcon.classList.remove(sunIcon);
+                themeToggleIcon.classList.add(moonIcon);
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        // Set initial theme icon based on the theme set in the <head> script
+        if (htmlElement.classList.contains('dark')) {
+            themeToggleIcon.classList.remove(moonIcon);
+            themeToggleIcon.classList.add(sunIcon);
+        } else {
+            themeToggleIcon.classList.remove(sunIcon);
+            themeToggleIcon.classList.add(moonIcon);
+        }
+
+
+        themeToggleButton.addEventListener('click', () => {
+            const isDarkMode = htmlElement.classList.contains('dark');
+            setTheme(!isDarkMode);
+        });
+
+    </script>
+</body>
+
+</html>
