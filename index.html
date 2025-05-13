@@ -3,7 +3,32 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ridho Tamma - Software Engineer</title>
+    <title>Ridho Tamma - Software Engineer | Full-Stack Developer</title>
+    <meta name="description" content="Ridho Tamma is a professional full-stack developer based in Karawang, Indonesia, specializing in modern web applications with Vue.js, React, TypeScript, and more." />
+    <meta name="keywords" content="software engineer, web developer, full-stack developer, Karawang, Indonesia, Ridho Tamma, Vue.js, React, TypeScript" />
+    <meta name="author" content="Ridho Tamma" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://ridhotamma.com/" />
+    <meta property="og:title" content="Ridho Tamma - Software Engineer | Full-Stack Developer" />
+    <meta property="og:description" content="Professional full-stack developer based in Karawang, Indonesia, specializing in building clean, efficient web applications." />
+    <meta property="og:image" content="/images/ridho-tamma-profile.jpg" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://ridhotamma.com/" />
+    <meta property="twitter:title" content="Ridho Tamma - Software Engineer | Full-Stack Developer" />
+    <meta property="twitter:description" content="Professional full-stack developer based in Karawang, Indonesia, specializing in building clean, efficient web applications." />
+    <meta property="twitter:image" content="/images/ridho-tamma-profile.jpg" />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://ridhotamma.com/" />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -176,6 +201,27 @@
         document.documentElement.classList.remove("dark");
       }
     </script>
+    
+    <!-- Schema.org structured data for Person -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Ridho Tamma",
+        "jobTitle": "Software Engineer",
+        "description": "Professional full-stack developer based in Karawang, Indonesia, specializing in building clean, efficient web applications.",
+        "url": "https://ridhotamma.com",
+        "knowsAbout": ["JavaScript", "TypeScript", "Vue.js", "React", "Full-Stack Development", "Web Development"],
+        "worksFor": {
+          "@type": "Organization",
+          "name": "LayangTech"
+        },
+        "sameAs": [
+          "https://github.com/ridhotamma",
+          "https://linkedin.com/in/ridhotamma"
+        ]
+      }
+    </script>
   </head>
 
   <body
@@ -192,12 +238,13 @@
           <a
             href="#hero"
             class="hover:text-gray-700 dark:hover:text-gray-300 transition duration-300 logo-link"
+            aria-label="Ridho Tamma - Back to top"
             >Ridho Tamma</a
           >
         </div>
 
         <div class="flex items-center space-x-4">
-          <nav class="hidden md:block">
+          <nav class="hidden md:block" aria-label="Main Navigation">
             <ul class="flex space-x-6">
               <li>
                 <a
@@ -238,6 +285,8 @@
               type="button"
               class="text-black dark:text-gray-100 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none focus:text-gray-700 dark:focus:text-gray-300 z-[60] relative text-xl"
               aria-label="Toggle menu"
+              aria-expanded="false"
+              aria-controls="mobile-menu"
             >
               <i id="menu-toggle-icon" class="fas fa-bars"></i>
             </button>
@@ -249,8 +298,9 @@
     <div
       id="mobile-menu"
       class="fixed top-0 left-0 w-screen h-screen bg-white dark:bg-gray-800 z-[55] flex flex-col items-center justify-center md:hidden transition-colors duration-300"
+      aria-hidden="true"
     >
-      <nav class="container mx-auto px-4 sm:px-6 text-center">
+      <nav class="container mx-auto px-4 sm:px-6 text-center" aria-label="Mobile Navigation">
         <ul class="flex flex-col items-center space-y-5">
           <li>
             <a
@@ -296,7 +346,7 @@
             class="text-base sm:text-lg md:text-xl mb-8 max-w-xl mx-auto hero-element text-gray-700 dark:text-gray-300"
           >
             Passionate about building clean, efficient, and user-friendly web
-            applications.
+            applications with Vue.js, React, and modern technologies.
           </p>
           <div class="space-y-4 sm:space-y-0 sm:space-x-4 hero-element">
             <a
@@ -323,7 +373,7 @@
             class="text-center max-w-3xl mx-auto mb-10 text-gray-700 dark:text-gray-300"
           >
             I'm a full stack developer based in Karawang, Indonesia. My
-            specialty is building web applications using modern technologies.
+            specialty is building web applications using modern technologies like Vue.js, React, and TypeScript.
           </p>
           <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div
@@ -334,6 +384,7 @@
                 alt="LayangPOS Backoffice Screenshot"
                 class="w-full h-48 object-cover mb-4 rounded"
                 onerror="this.onerror=null; this.src='https://placehold.co/600x400/e2e8f0/a0aec0?text=LayangPOS+Backoffice';"
+                loading="lazy"
               />
               <h3 class="text-xl font-bold mb-2 text-black dark:text-white">
                 LayangPOS Backoffice
@@ -366,6 +417,7 @@
                 target="_blank"
                 rel="noopener noreferrer"
                 class="text-sm text-blue-600 dark:text-blue-400 hover:underline"
+                aria-label="View LayangPOS Backoffice Demo"
                 >View Live Demo →</a
               >
             </div>
@@ -522,7 +574,7 @@
                 >
                 <span
                   class="inline-block bg-gray-200 dark:bg-gray-700 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 dark:text-gray-200 mr-2 mb-2"
-                  >PWA</span
+                  >Rest API</span
                 >
               </div>
               <p class="text-sm text-gray-500 dark:text-gray-400 italic">
@@ -554,11 +606,11 @@
                 >
                 <span
                   class="inline-block bg-gray-200 dark:bg-gray-700 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 dark:text-gray-200 mr-2 mb-2"
-                  >Tailwind CSS</span
+                  >Chakra UI</span
                 >
                 <span
                   class="inline-block bg-gray-200 dark:bg-gray-700 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 dark:text-gray-200 mr-2 mb-2"
-                  >Node.js</span
+                  >Django</span
                 >
               </div>
               <p class="text-sm text-gray-500 dark:text-gray-400 italic">
@@ -586,15 +638,15 @@
               <div class="mb-4">
                 <span
                   class="inline-block bg-gray-200 dark:bg-gray-700 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 dark:text-gray-200 mr-2 mb-2"
-                  >React</span
+                  >Next JS</span
                 >
                 <span
                   class="inline-block bg-gray-200 dark:bg-gray-700 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 dark:text-gray-200 mr-2 mb-2"
-                  >Chakra UI</span
+                  >Shadcn UI</span
                 >
                 <span
                   class="inline-block bg-gray-200 dark:bg-gray-700 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 dark:text-gray-200 mr-2 mb-2"
-                  >Express.js</span
+                  >Spring Boot</span
                 >
               </div>
               <a
@@ -626,15 +678,15 @@
               <div class="mb-4">
                 <span
                   class="inline-block bg-gray-200 dark:bg-gray-700 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 dark:text-gray-200 mr-2 mb-2"
-                  >React</span
+                  >Flutter</span
                 >
                 <span
                   class="inline-block bg-gray-200 dark:bg-gray-700 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 dark:text-gray-200 mr-2 mb-2"
-                  >Chakra UI</span
+                  >Dart</span
                 >
                 <span
                   class="inline-block bg-gray-200 dark:bg-gray-700 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 dark:text-gray-200 mr-2 mb-2"
-                  >Express.js</span
+                  >Rest API</span
                 >
               </div>
               <p class="text-sm text-gray-500 dark:text-gray-400 italic">
@@ -661,15 +713,15 @@
               <div class="mb-4">
                 <span
                   class="inline-block bg-gray-200 dark:bg-gray-700 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 dark:text-gray-200 mr-2 mb-2"
-                  >React</span
+                  >HTML5</span
                 >
                 <span
                   class="inline-block bg-gray-200 dark:bg-gray-700 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 dark:text-gray-200 mr-2 mb-2"
-                  >GSAP</span
+                  >CSS</span
                 >
                 <span
                   class="inline-block bg-gray-200 dark:bg-gray-700 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 dark:text-gray-200 mr-2 mb-2"
-                  >Tailwind CSS</span
+                  >JavaScript</span
                 >
               </div>
               <a
@@ -700,15 +752,15 @@
               <div class="mb-4">
                 <span
                   class="inline-block bg-gray-200 dark:bg-gray-700 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 dark:text-gray-200 mr-2 mb-2"
-                  >Vue.js</span
-                >
-                <span
-                  class="inline-block bg-gray-200 dark:bg-gray-700 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 dark:text-gray-200 mr-2 mb-2"
-                  >Firebase</span
+                  >HTML</span
                 >
                 <span
                   class="inline-block bg-gray-200 dark:bg-gray-700 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 dark:text-gray-200 mr-2 mb-2"
                   >Tailwind CSS</span
+                >
+                <span
+                  class="inline-block bg-gray-200 dark:bg-gray-700 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 dark:text-gray-200 mr-2 mb-2"
+                  >JavaScript</span
                 >
               </div>
               <a
@@ -743,11 +795,15 @@
                 >
                 <span
                   class="inline-block bg-gray-200 dark:bg-gray-700 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 dark:text-gray-200 mr-2 mb-2"
-                  >Vue 3</span
+                  >React</span
                 >
                 <span
                   class="inline-block bg-gray-200 dark:bg-gray-700 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 dark:text-gray-200 mr-2 mb-2"
-                  >Bun</span
+                  >Chakra UI</span
+                >
+                <span
+                  class="inline-block bg-gray-200 dark:bg-gray-700 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 dark:text-gray-200 mr-2 mb-2"
+                  >Elysia JS</span
                 >
               </div>
               <p class="text-sm text-gray-500 dark:text-gray-400 italic">
@@ -775,15 +831,15 @@
               <div class="mb-4">
                 <span
                   class="inline-block bg-gray-200 dark:bg-gray-700 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 dark:text-gray-200 mr-2 mb-2"
-                  >React</span
-                >
-                <span
-                  class="inline-block bg-gray-200 dark:bg-gray-700 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 dark:text-gray-200 mr-2 mb-2"
-                  >Next.js</span
+                  >HTML5</span
                 >
                 <span
                   class="inline-block bg-gray-200 dark:bg-gray-700 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 dark:text-gray-200 mr-2 mb-2"
                   >Tailwind CSS</span
+                >
+                <span
+                  class="inline-block bg-gray-200 dark:bg-gray-700 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 dark:text-gray-200 mr-2 mb-2"
+                  >JavaScript</span
                 >
               </div>
               <a
@@ -818,11 +874,15 @@
                 >
                 <span
                   class="inline-block bg-gray-200 dark:bg-gray-700 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 dark:text-gray-200 mr-2 mb-2"
-                  >GSAP</span
+                  >CSS</span
                 >
                 <span
                   class="inline-block bg-gray-200 dark:bg-gray-700 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 dark:text-gray-200 mr-2 mb-2"
                   >JavaScript</span
+                >
+                <span
+                  class="inline-block bg-gray-200 dark:bg-gray-700 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 dark:text-gray-200 mr-2 mb-2"
+                  >GSAP</span
                 >
               </div>
               <a
@@ -854,11 +914,15 @@
               <div class="mb-4">
                 <span
                   class="inline-block bg-gray-200 dark:bg-gray-700 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 dark:text-gray-200 mr-2 mb-2"
-                  >Vue.js</span
+                  >HTML5</span
                 >
                 <span
                   class="inline-block bg-gray-200 dark:bg-gray-700 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 dark:text-gray-200 mr-2 mb-2"
-                  >D3.js</span
+                  >CSS</span
+                >
+                <span
+                  class="inline-block bg-gray-200 dark:bg-gray-700 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 dark:text-gray-200 mr-2 mb-2"
+                  >JavaScript</span
                 >
                 <span
                   class="inline-block bg-gray-200 dark:bg-gray-700 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 dark:text-gray-200 mr-2 mb-2"
@@ -893,15 +957,19 @@
               <div class="mb-4">
                 <span
                   class="inline-block bg-gray-200 dark:bg-gray-700 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 dark:text-gray-200 mr-2 mb-2"
-                  >Vue.js</span
+                  >HTML5</span
                 >
                 <span
                   class="inline-block bg-gray-200 dark:bg-gray-700 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 dark:text-gray-200 mr-2 mb-2"
-                  >Mapbox</span
+                  >CSS</span
                 >
                 <span
                   class="inline-block bg-gray-200 dark:bg-gray-700 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 dark:text-gray-200 mr-2 mb-2"
-                  >SVG Animation</span
+                  >JavaScript</span
+                >
+                <span
+                  class="inline-block bg-gray-200 dark:bg-gray-700 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 dark:text-gray-200 mr-2 mb-2"
+                  >GSAP</span
                 >
               </div>
               <a
@@ -933,15 +1001,19 @@
               <div class="mb-4">
                 <span
                   class="inline-block bg-gray-200 dark:bg-gray-700 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 dark:text-gray-200 mr-2 mb-2"
-                  >Vue.js</span
+                  >HTML5</span
                 >
                 <span
                   class="inline-block bg-gray-200 dark:bg-gray-700 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 dark:text-gray-200 mr-2 mb-2"
-                  >Chart.js</span
+                  >CSS</span
                 >
                 <span
                   class="inline-block bg-gray-200 dark:bg-gray-700 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 dark:text-gray-200 mr-2 mb-2"
-                  >Lottie</span
+                  >JavaScript</span
+                >
+                <span
+                  class="inline-block bg-gray-200 dark:bg-gray-700 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 dark:text-gray-200 mr-2 mb-2"
+                  >GSAP</span
                 >
               </div>
               <a
@@ -957,7 +1029,8 @@
             <button
               id="load-more-projects"
               class="btn-minimal border border-black text-black dark:border-gray-300 dark:text-gray-300 hover:bg-black hover:text-white dark:hover:bg-gray-300 dark:hover:text-gray-900 px-6 py-2 rounded-full text-sm font-medium transition-colors duration-300"
-              style="display: none;"
+              style="display: none"
+              aria-label="Load more projects"
             >
               Load More
             </button>
@@ -978,7 +1051,7 @@
               <p class="mb-4 text-gray-700 dark:text-gray-300 leading-relaxed">
                 Hi, I'm Ridho Tamma, a full stack developer based in Karawang,
                 Indonesia. I specialize in building web applications using
-                modern technologies. I enjoy turning complex problems into
+                modern technologies like Vue.js, React, and TypeScript. I enjoy turning complex problems into
                 simple, beautiful, and intuitive solutions.
               </p>
               <p class="text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
@@ -991,6 +1064,7 @@
                 <a
                   href="https://www.cake.me/ridho-tamma"
                   class="btn-minimal border border-black text-black dark:border-gray-300 dark:text-gray-300 hover:bg-black hover:text-white dark:hover:bg-gray-300 dark:hover:text-gray-900"
+                  aria-label="View Ridho Tamma's Resume"
                   >See my Resume</a
                 >
               </div>
@@ -1070,7 +1144,7 @@
           </p>
           <div class="mb-8 contact-element">
             <a
-              href="mailto:ridho@example.com"
+              href="mailto:ridho.tamma@gmail.com"
               class="text-lg sm:text-xl font-medium text-black dark:text-gray-200 hover:underline break-all"
             >
               ridho.tamma@gmail.com
@@ -1083,6 +1157,7 @@
               rel="noopener noreferrer"
               class="social-icon text-black dark:text-gray-200 hover:text-gray-600 dark:hover:text-gray-400"
               title="GitHub"
+              aria-label="Visit Ridho Tamma's GitHub Profile"
             >
               <i class="fab fa-github"></i>
             </a>
@@ -1092,6 +1167,7 @@
               rel="noopener noreferrer"
               class="social-icon text-black dark:text-gray-200 hover:text-gray-600 dark:hover:text-gray-400"
               title="LinkedIn"
+              aria-label="Visit Ridho Tamma's LinkedIn Profile"
             >
               <i class="fab fa-linkedin"></i>
             </a>
@@ -1101,6 +1177,7 @@
               rel="noopener noreferrer"
               class="social-icon text-black dark:text-gray-200 hover:text-gray-600 dark:hover:text-gray-400"
               title="WhatsApp"
+              aria-label="Contact Ridho Tamma on WhatsApp"
             >
               <i class="fab fa-whatsapp"></i>
             </a>
@@ -1345,9 +1422,9 @@
       });
 
       // Load More Projects functionality
-      (function() {
-        const projectsGrid = document.getElementById('projects-grid');
-        const loadMoreBtn = document.getElementById('load-more-projects');
+      (function () {
+        const projectsGrid = document.getElementById("projects-grid");
+        const loadMoreBtn = document.getElementById("load-more-projects");
         if (!projectsGrid || !loadMoreBtn) return;
         const projects = Array.from(projectsGrid.children);
         const perPage = 4;
@@ -1355,12 +1432,12 @@
 
         function showProjects() {
           projects.forEach((card, idx) => {
-            card.style.display = idx < current ? '' : 'none';
+            card.style.display = idx < current ? "" : "none";
           });
           if (current >= projects.length) {
-            loadMoreBtn.style.display = 'none';
+            loadMoreBtn.style.display = "none";
           } else {
-            loadMoreBtn.style.display = '';
+            loadMoreBtn.style.display = "";
           }
         }
 
@@ -1372,7 +1449,7 @@
         // Initial state
         current = perPage;
         showProjects();
-        loadMoreBtn.addEventListener('click', loadMore);
+        loadMoreBtn.addEventListener("click", loadMore);
       })();
     </script>
   </body>
